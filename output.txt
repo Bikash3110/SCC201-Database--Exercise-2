@@ -1,0 +1,57 @@
+In go...
+1 a) what is the title of the course with code 361?
+SELECT c_title FROM courses WHERE code = 361;
+Multimedia Systems   
+1 b) what position and qualifications does Davies have?
+SELECT pos, qual FROM staff WHERE s_name = 'Davies';
+Professor           |PhD                  
+2 a) what is the name of the department that Bear works for?
+SELECT d_title FROM department, staff WHERE department.d_id = staff.d_id AND staff.s_name = 'Bear';
+Nextology            
+2 b) what are the course codes of courses offered by the Computing department? 
+SELECT code FROM courses, department WHERE department.d_id =courses.d_id AND department.d_title = 'Computing';
+361                  
+112c                 
+242                  
+111a                 
+3 a) What are the titles of course given by Mariani?
+SELECT c_title FROM courses ,department,staff WHERE (department.d_id = courses.d_id AND department.d_id = staff.d_id)AND staff.s_name= 'Mariani' ORDER BY c_title ASC;
+Databases            
+Introduction to Operating Systems 
+Multimedia Systems   
+Programming in Assembler 
+3 b) What are the names and initials of the staff who work on the COMIC project?
+SELECT s_name, initials FROM projects ,work_on,staff WHERE (staff.s_id == work_on.s_id AND work_on.p_id = projects.p_id)AND projects.p_title='COMIC' ORDER BY s_name ASC;
+Hughes              |J     
+Mariani             |J.A.  
+4 a) add a row to the Department relation regarding the Sociology department, with a location at Cartmel college and a code of SOCIO
+INSERT INTO department VALUES ('SOCIO','Sociology','Cartmel college');
+Error in 4a
+4 b) add a row to Staff regarding J. Hughes, who is a Professor and has a PhD, an S_ID of JH, and works for Sociology
+INSERT INTO staff VALUES ('JH','J','Hughes','Professor','Phd','SOCIO');
+Error in 4b
+4 c) add a row to Work_on for J.Hughes working on COMIC from 1991 to 1994.
+INSERT INTO work_on VALUES ('JH','COMIC','1991','1990'); 
+Error in 4c
+3 b) What are the names and initials of the staff who work on the COMIC project?
+SELECT s_name, initials FROM projects ,work_on,staff WHERE (staff.s_id == work_on.s_id AND work_on.p_id = projects.p_id)AND projects.p_title='COMIC' ORDER BY s_name ASC;
+Hughes              |J     
+Mariani             |J.A.  
+5 a) what are the names of people who started work on COMIC between 1990 and 1992?
+SELECT staff.s_name FROM staff,work_on,projects WHERE ((staff.s_id= work_on.s_id )AND (1990 < work_on.start_date AND work_on.start_date < 1992)) AND(work_on.p_id = projects.p_id AND projects.p_title = 'COMIC');
+Error in 5a
+5 b) what is the total amount of funding, and the average amount of funding, of all projects?
+SELECT SUM(funding), AVG(funding) FROM projects;
+228482| 45696 
+Parameterising Q3a) using Mariani
+3 a) What are the titles of course given by Mariani ?
+SELECT c_title FROM courses ,department,staff WHERE (department.d_id = courses.d_id AND department.d_id = staff.d_id)AND staff.s_name= Mariani ORDER BY c_title ASC;
+Error in 3a
+6. List staff names and the number of projects they have worked on.
+SELECT staff.s_name, COUNT(work_on.p_id) FROM staff,work_on WHERE staff.s_id = work_on.s_id GROUP BY staff.s_name;
+Bear                |1  
+Blair               |1  
+Davies              |1  
+Finney              |1  
+Hughes              |1  
+Mariani             |2  
